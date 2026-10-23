@@ -5,8 +5,8 @@ class Moneda {
         this.id = id;
         this.codigo = codigo;
         this.nombre = nombre;
-        this.cotizacion = cotizacion; // pesos (ARS) por unidad
-        this.stock = stock;           // unidades disponibles para vender
+        this.cotizacion = cotizacion; 
+        this.stock = stock;           
     }
 
     // convierte un monto en pesos a unidades de esta moneda
@@ -48,7 +48,7 @@ class Operacion {
     }
 }
 
-// ---------- BASE DE DATOS SIMULADA (array de objetos) ----------
+// array de objetos
 const monedas = [
     new Moneda(1, "USD", "Dolar estadounidense", 1500, 5000),
     new Moneda(2, "EUR", "Euro", 1750, 3000),
@@ -59,16 +59,16 @@ const monedas = [
 
 const historial = [];
 
-// ---------- FUNCIONES AUXILIARES ----------
+//FUNCIONES AUXILIARES 
 
 // find: captura una moneda por su codigo (devuelve undefined si no existe)
 const buscarMoneda = (lista, codigo) => lista.find((moneda) => moneda.codigo === codigo);
 
-// map: arma el texto con las monedas para mostrarlo en un prompt
+// arma el texto con las monedas para mostrarlo en un prompt
 const armarListado = (lista) =>
     lista.map((moneda) => `${moneda.codigo} - ${moneda.nombre} ($${moneda.cotizacion} ARS)`).join("\n");
 
-// pide un numero mayor que cero; devuelve el numero o null si cancela
+// pide un numero mayor que cero
 function solicitarNumero(mensaje) {
     while (true) {
         const entrada = prompt(mensaje);
@@ -86,14 +86,14 @@ function solicitarNumero(mensaje) {
     }
 }
 
-// ---------- OPCIONES DEL SIMULADOR ----------
+//OPCIONES DEL SIMULADOR 
 
 function mostrarMonedas(lista) {
     console.log("----- Monedas disponibles -----");
     lista.forEach((moneda) => console.log(moneda.informar()));
 }
 
-// Cambiar dinero: usa find para capturar la moneda y los metodos de la clase Moneda
+// Cambiar dinero
 function operarCambio(lista, operaciones) {
     const entrada = prompt(
         `Que moneda queres comprar?\n\n${armarListado(lista)}\n\nEscribi el codigo.`
@@ -135,7 +135,7 @@ function operarCambio(lista, operaciones) {
     console.log(`Stock restante de ${moneda.codigo}: ${moneda.stock.toFixed(2)}`);
 }
 
-// filter: monedas con cotizacion minima elegida por el usuario
+//  monedas con cotizacion minima elegida por el usuario
 function filtrarPorCotizacion(lista) {
     const minimo = solicitarNumero("Mostrar monedas con cotizacion mayor o igual a (ARS):");
 
@@ -154,7 +154,7 @@ function filtrarPorCotizacion(lista) {
     filtradas.forEach((moneda) => console.log(moneda.informar()));
 }
 
-// sort: las 3 monedas de mayor cotizacion (se ordena una copia para no alterar la lista)
+// se ordena una copia para no alterar la lista
 function mostrarTop3(lista) {
     const top = [...lista].sort((a, b) => b.cotizacion - a.cotizacion).slice(0, 3);
 
@@ -164,7 +164,7 @@ function mostrarTop3(lista) {
     });
 }
 
-// find: busca una moneda por su ID
+// busca una moneda por su ID
 function consultarPorId(lista) {
     const id = solicitarNumero(`Ingresa el ID de la moneda (1 a ${lista.length}):`);
 
@@ -184,7 +184,7 @@ function consultarPorId(lista) {
     console.log(moneda.informar());
 }
 
-// reduce: total de pesos cambiados en todas las operaciones
+// total de pesos cambiados en todas las operaciones
 function mostrarHistorial(operaciones) {
     if (operaciones.length === 0) {
         console.log("Todavia no realizaste operaciones.");
@@ -198,7 +198,7 @@ function mostrarHistorial(operaciones) {
     console.log(`Total cambiado: $${totalARS.toLocaleString("es-AR")} ARS en ${operaciones.length} operacion(es).`);
 }
 
-// ---------- PROGRAMA PRINCIPAL ----------
+// PROGRAMA PRINCIPAL 
 function iniciarSimulador(lista, operaciones) {
     console.log("Simulador de Casa de Cambio iniciado");
     mostrarMonedas(lista);
@@ -249,7 +249,7 @@ function iniciarSimulador(lista, operaciones) {
     console.log("Simulador finalizado.");
 }
 
-// El boton de la pagina inicia el simulador
+
 document.getElementById("iniciar").addEventListener("click", () => {
     iniciarSimulador(monedas, historial);
 });
